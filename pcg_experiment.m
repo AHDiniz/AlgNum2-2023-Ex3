@@ -61,15 +61,12 @@ function pcg_experiment()
         fprintf(data_file, "Convergence Flag: %d\n", icc0_flag);
         fprintf(data_file, "Iterations: %d\n", icc0_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(icc0_x, inf));
-        fprintf(data_file, "nnz [L, U]: (%d, %d)\n", nnz(L), nnz(U));
+        fprintf(data_file, "nnz L: %d\n", nnz(L));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
 
         hf = figure();
         spy(L);
         print(hf, sprintf("out/%s_spy_L_icc0.png", matrices{i}), "-dpng");
-        hf = figure();
-        spy(U);
-        print(hf, sprintf("out/%s_spy_U_icc0.png", matrices{i}), "-dpng");
         
         # ILU(0) preconditioning with line reordering
         fprintf(data_file, "\nICC(0) Preconditioning RCM\n\n");
@@ -84,15 +81,12 @@ function pcg_experiment()
         fprintf(data_file, "Convergence Flag: %d\n", icc0r_flag);
         fprintf(data_file, "Iterations: %d\n", icc0r_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(icc0r_x, inf));
-        fprintf(data_file, "nnz [L, U]: (%d, %d)\n", nnz(L), nnz(U));
+        fprintf(data_file, "nnz L: %d\n", nnz(L));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
 
         hf = figure();
         spy(L);
         print(hf, sprintf("out/%s_spy_L_icc0r.png", matrices{i}), "-dpng");
-        hf = figure();
-        spy(U);
-        print(hf, sprintf("out/%s_spy_U_icc0r.png", matrices{i}), "-dpng");
 
         # Only ILU crout preconditioning
         fprintf(data_file, "\nICT Preconditioning\n\n");
@@ -107,15 +101,12 @@ function pcg_experiment()
         fprintf(data_file, "Convergence Flag: %d\n", ict_flag);
         fprintf(data_file, "Iterations: %d\n", ict_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(ict_x, inf));
-        fprintf(data_file, "nnz [L, U]: (%d, %d)\n", nnz(L), nnz(U));
+        fprintf(data_file, "nnz L: %d\n", nnz(L));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
 
         hf = figure();
         spy(L);
         print(hf, sprintf("out/%s_spy_L_ict.png", matrices{i}), "-dpng");
-        hf = figure();
-        spy(U);
-        print(hf, sprintf("out/%s_spy_U_ict.png", matrices{i}), "-dpng");
 
         # ILU crout preconditioning with line reordering
         fprintf(data_file, "\nICT Preconditioning RCM\n\n");
@@ -130,16 +121,13 @@ function pcg_experiment()
         fprintf(data_file, "Convergence Flag: %d\n", ictr_flag);
         fprintf(data_file, "Iterations: %d\n", ictr_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(ictr_x, inf));
-        fprintf(data_file, "nnz [L, U]: (%d, %d)\n", nnz(L), nnz(U));
+        fprintf(data_file, "nnz L: %d\n", nnz(L));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
         fclose(data_file);
 
         hf = figure();
         spy(L);
         print(hf, sprintf("out/%s_spy_L_ictr.png", matrices{i}), "-dpng");
-        hf = figure();
-        spy(U);
-        print(hf, sprintf("out/%s_spy_U_ictr.png", matrices{i}), "-dpng");
 
         max_iter = max([noprecond_iter, icc0_iter, icc0r_iter, ict_iter, ictr_iter]);
 
