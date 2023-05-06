@@ -1,5 +1,5 @@
 function gmres_experiment()
-    matrices = ["cavity05", "cz2548", "epb3"];
+    matrices = {"cavity05", "cz2548", "epb3"};
     test_params = [false, true, true];
     ks = {
         [200],
@@ -15,7 +15,7 @@ function gmres_experiment()
 
     for i = 1 : numel(matrices)
 
-        load(sprintf("in/%s.mat", matrices(i)));
+        load(sprintf("in/%s.mat", matrices{i}));
 
         data_file = fopen(sprintf("out/%s_data.txt"), "w");
 
@@ -31,7 +31,7 @@ function gmres_experiment()
 
         hf = figure();
         spy(A);
-        print(hf, sprintf("out/%s_spy_A.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_A.png", matrices{i}), "-dpng");
 
         perm = symrcm(A);
         identity = speye(n, n);
@@ -41,7 +41,7 @@ function gmres_experiment()
 
         hf = figure();
         spy(R);
-        print(hf, sprintf("out/%s_spy_R.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_R.png", matrices{i}), "-dpng");
 
         used_k = 0;
         used_tol = .0;
@@ -89,10 +89,10 @@ function gmres_experiment()
 
         hf = figure();
         spy(L);
-        print(hf, sprintf("out/%s_spy_L_ilu0.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_L_ilu0.png", matrices{i}), "-dpng");
         hf = figure();
         spy(U);
-        print(hf, sprintf("out/%s_spy_U_ilu0.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_U_ilu0.png", matrices{i}), "-dpng");
         
         # ILU(0) preconditioning with line reordering
         fprintf(data_file, "\nILU(0) Preconditioning RCM\n\n");
@@ -113,10 +113,10 @@ function gmres_experiment()
 
         hf = figure();
         spy(L);
-        print(hf, sprintf("out/%s_spy_L_ilu0r.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_L_ilu0r.png", matrices{i}), "-dpng");
         hf = figure();
         spy(U);
-        print(hf, sprintf("out/%s_spy_U_ilu0r.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_U_ilu0r.png", matrices{i}), "-dpng");
 
         # Only ILU crout preconditioning
         fprintf(data_file, "\nILU Crout Preconditioning\n\n");
@@ -138,10 +138,10 @@ function gmres_experiment()
 
         hf = figure();
         spy(L);
-        print(hf, sprintf("out/%s_spy_L_crout.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_L_crout.png", matrices{i}), "-dpng");
         hf = figure();
         spy(U);
-        print(hf, sprintf("out/%s_spy_U_crout.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_U_crout.png", matrices{i}), "-dpng");
 
         # ILU crout preconditioning with line reordering
         fprintf(data_file, "\nILU Crout Preconditioning RCM\n\n");
@@ -164,10 +164,10 @@ function gmres_experiment()
 
         hf = figure();
         spy(L);
-        print(hf, sprintf("out/%s_spy_L_croutr.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_L_croutr.png", matrices{i}), "-dpng");
         hf = figure();
         spy(U);
-        print(hf, sprintf("out/%s_spy_U_croutr.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_U_croutr.png", matrices{i}), "-dpng");
 
         max_iter = max([noprecond_iter_n, ilu0_iter_n, ilu0r_iter_n, crout_iter_n, croutr_iter_n]);
 
@@ -199,7 +199,7 @@ function gmres_experiment()
         hf = figure();
         plot(1 : max_iter, adj_noprecond_resvec, "k", 1 : max_iter, adj_ilu0_resvec, "r", 1 : max_iter, adj_ilu0r_resvec, "g", 1 : max_iter, adj_crout_resvec, "b", 1 : max_iter, adj_croutr_resvec, "y");
         legend("No Prec.", "ILU(0)", "ILU(0) RCM", "Crout", "Crout RCM");
-        print(hf, sprintf("out/%s_res_iter.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_res_iter.png", matrices{i}), "-dpng");
 
     end
 end

@@ -1,11 +1,11 @@
 function pcg_experiment()
-    matrices = ["mesh3em5", "662_bus", "pdb1HYS", "Dubcova3"];
+    matrices = {"mesh3em5", "662_bus", "pdb1HYS", "Dubcova3"};
     tols = [1e-10, 1e-10, 1e-7, 1e-10];
     maxit = [1e5];
 
     for i = 1 : numel(matrices)
 
-        load(sprintf("in/%s.mat", matrices(i)));
+        load(sprintf("in/%s.mat", matrices{i}));
 
         data_file = fopen(sprintf("out/%s_data.txt"), "w");
 
@@ -21,7 +21,7 @@ function pcg_experiment()
 
         hf = figure();
         spy(A);
-        print(hf, sprintf("out/%s_spy_A.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_A.png", matrices{i}), "-dpng");
 
         perm = symrcm(A);
         identity = speye(n, n);
@@ -31,7 +31,7 @@ function pcg_experiment()
 
         hf = figure();
         spy(R);
-        print(hf, sprintf("out/%s_spy_R.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_R.png", matrices{i}), "-dpng");
 
         used_k = 0;
         used_tol = .0;
@@ -70,10 +70,10 @@ function pcg_experiment()
 
         hf = figure();
         spy(L);
-        print(hf, sprintf("out/%s_spy_L_icc0.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_L_icc0.png", matrices{i}), "-dpng");
         hf = figure();
         spy(U);
-        print(hf, sprintf("out/%s_spy_U_icc0.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_U_icc0.png", matrices{i}), "-dpng");
         
         # ILU(0) preconditioning with line reordering
         fprintf(data_file, "\nICC(0) Preconditioning RCM\n\n");
@@ -94,10 +94,10 @@ function pcg_experiment()
 
         hf = figure();
         spy(L);
-        print(hf, sprintf("out/%s_spy_L_icc0r.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_L_icc0r.png", matrices{i}), "-dpng");
         hf = figure();
         spy(U);
-        print(hf, sprintf("out/%s_spy_U_icc0r.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_U_icc0r.png", matrices{i}), "-dpng");
 
         # Only ILU crout preconditioning
         fprintf(data_file, "\nICT Preconditioning\n\n");
@@ -119,10 +119,10 @@ function pcg_experiment()
 
         hf = figure();
         spy(L);
-        print(hf, sprintf("out/%s_spy_L_ict.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_L_ict.png", matrices{i}), "-dpng");
         hf = figure();
         spy(U);
-        print(hf, sprintf("out/%s_spy_U_ict.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_U_ict.png", matrices{i}), "-dpng");
 
         # ILU crout preconditioning with line reordering
         fprintf(data_file, "\nICT Preconditioning RCM\n\n");
@@ -145,10 +145,10 @@ function pcg_experiment()
 
         hf = figure();
         spy(L);
-        print(hf, sprintf("out/%s_spy_L_ictr.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_L_ictr.png", matrices{i}), "-dpng");
         hf = figure();
         spy(U);
-        print(hf, sprintf("out/%s_spy_U_ictr.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_spy_U_ictr.png", matrices{i}), "-dpng");
 
         max_iter = max([noprecond_iter_n, icc0_iter_n, icc0r_iter_n, ict_iter_n, ictr_iter_n]);
 
@@ -180,7 +180,7 @@ function pcg_experiment()
         hf = figure();
         plot(1 : max_iter, adj_noprecond_resvec, "k", 1 : max_iter, adj_icc0_resvec, "r", 1 : max_iter, adj_icc0r_resvec, "g", 1 : max_iter, adj_ict_resvec, "b", 1 : max_iter, adj_ictr_resvec, "y");
         legend("No Prec.", "ICC(0)", "ICC(0) RCM", "ICT", "ICT RCM");
-        print(hf, sprintf("out/%s_res_iter.png", matrices(i)), "-dpng");
+        print(hf, sprintf("out/%s_res_iter.png", matrices{i}), "-dpng");
 
     end
 end
