@@ -115,7 +115,7 @@ function pcg_experiment()
         opts.type = "ict";
         opts.droptol = 1e-4;
         L = ichol(R, opts);
-        [ictr_x, ictr_flag, ictr_relres, ictr_iter, ictr_resvec] = gmres(R, rb, used_k, used_tol, used_maxit, L, U);
+        [ictr_x, ictr_flag, ictr_relres, ictr_iter, ictr_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
         elapsed_time = etime(clock(), timer);
 
         fprintf(data_file, "Convergence Flag: %d\n", ictr_flag);
