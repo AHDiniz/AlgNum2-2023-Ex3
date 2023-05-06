@@ -58,7 +58,7 @@ function pcg_experiment()
         [icc0_x, icc0_flag, icc0_relres, icc0_iter, icc0_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
         elapsed_time = etime(clock(), timer);
 
-        fprintf(data_file, "Convergence Flag: %d\n", ilu0_flag);
+        fprintf(data_file, "Convergence Flag: %d\n", icc0_flag);
         fprintf(data_file, "Iterations: %d\n", icc0_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(icc0_x, inf));
         fprintf(data_file, "nnz [L, U]: (%d, %d)\n", nnz(L), nnz(U));
