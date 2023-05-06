@@ -17,7 +17,7 @@ function gmres_experiment()
 
         load(sprintf("in/%s.mat", matrices{i}));
 
-        data_file = fopen(sprintf("out/%s_data.txt"), "w");
+        data_file = fopen(sprintf("out/%s_data.txt", matrices{i}), "w");
 
         A = Problem.A;
         n = rows(A);
