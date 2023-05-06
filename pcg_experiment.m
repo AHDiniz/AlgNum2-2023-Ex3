@@ -27,7 +27,7 @@ function pcg_experiment()
         identity = speye(n, n);
         P = identity(perm, :);
         R = P * A * P';
-        rb = P * b * P';
+        rb = P * b;
 
         hf = figure();
         spy(R);
@@ -41,13 +41,11 @@ function pcg_experiment()
         fprintf(data_file, "\nNo Preconditioning\n\n");
 
         timer = clock();
-        [noprecond_x, noprecond_flag, noprecond_relres, noprecond_iter, noprecond_resvec] = pcg(A, b, tols(i), maxit(0));
+        [noprecond_x, noprecond_flag, noprecond_relres, noprecond_iter, noprecond_resvec] = pcg(A, b, tols(i), maxit(1));
         elapsed_time = etime(clock(), timer);
 
-        noprecond_iter_n = noprecond_iter(1, 1) * used_k + noprecond_iter(1, 2);
-
         fprintf(data_file, "Convergence Flag: %d\n", noprecond_flag);
-        fprintf(data_file, "Iterations: %d\n", noprecond_iter_n);
+        fprintf(data_file, "Iterations: %d\n", noprecond_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(noprecond_x, inf));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
 
@@ -57,13 +55,11 @@ function pcg_experiment()
         timer = clock();
         opts.type = "nofill";
         L = ichol(A, opts);
-        [icc0_x, icc0_flag, icc0_relres, icc0_iter, icc0_resvec] = pcg(A, b, tols(i), maxit(0), L * L');
+        [icc0_x, icc0_flag, icc0_relres, icc0_iter, icc0_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
         elapsed_time = etime(clock(), timer);
 
-        icc0_iter_n = icc0_iter(1, 1) * used_k + icc0_iter(1, 2);
-
         fprintf(data_file, "Convergence Flag: %d\n", ilu0_flag);
-        fprintf(data_file, "Iterations: %d\n", icc0_iter_n);
+        fprintf(data_file, "Iterations: %d\n", icc0_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(icc0_x, inf));
         fprintf(data_file, "nnz [L, U]: (%d, %d)\n", nnz(L), nnz(U));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
@@ -81,13 +77,12 @@ function pcg_experiment()
         timer = clock();
         opts.type = "nofill";
         L = ichol(R, opts);
-        [icc0r_x, icc0r_flag, icc0r_relres, icc0r_iter, icc0r_resvec] = pcg(A, b, tols(i), maxit(0), L * L');
+        [icc0r_x, icc0r_flag, icc0r_relres, icc0r_iter, icc0r_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
         elapsed_time = etime(clock(), timer);
 
-        icc0r_iter_n = icc0r_iter(1, 1) * used_k + icc0r_iter(1, 2);
 
         fprintf(data_file, "Convergence Flag: %d\n", icc0r_flag);
-        fprintf(data_file, "Iterations: %d\n", icc0r_iter_n);
+        fprintf(data_file, "Iterations: %d\n", icc0r_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(icc0r_x, inf));
         fprintf(data_file, "nnz [L, U]: (%d, %d)\n", nnz(L), nnz(U));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
@@ -106,13 +101,11 @@ function pcg_experiment()
         opts.type = "ict";
         opts.droptol = 1e-4;
         L = ichol(A, opts);
-        [ict_x, ict_flag, ict_relres, ict_iter, ict_resvec] = pcg(A, b, tols(i), maxit(0), L * L');
+        [ict_x, ict_flag, ict_relres, ict_iter, ict_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
         elapsed_time = etime(clock(), timer);
 
-        ict_iter_n = ict_iter(1, 1) * used_k + ict_iter(1, 2);
-
         fprintf(data_file, "Convergence Flag: %d\n", ict_flag);
-        fprintf(data_file, "Iterations: %d\n", ict_iter_n);
+        fprintf(data_file, "Iterations: %d\n", ict_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(ict_x, inf));
         fprintf(data_file, "nnz [L, U]: (%d, %d)\n", nnz(L), nnz(U));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
@@ -134,10 +127,8 @@ function pcg_experiment()
         [ictr_x, ictr_flag, ictr_relres, ictr_iter, ictr_resvec] = gmres(R, rb, used_k, used_tol, used_maxit, L, U);
         elapsed_time = etime(clock(), timer);
 
-        ictr_iter_n = ictr_iter(1, 1) * used_k + ictr_iter(1, 2);
-
         fprintf(data_file, "Convergence Flag: %d\n", ictr_flag);
-        fprintf(data_file, "Iterations: %d\n", ictr_iter_n);
+        fprintf(data_file, "Iterations: %d\n", ictr_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(ictr_x, inf));
         fprintf(data_file, "nnz [L, U]: (%d, %d)\n", nnz(L), nnz(U));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
@@ -150,7 +141,7 @@ function pcg_experiment()
         spy(U);
         print(hf, sprintf("out/%s_spy_U_ictr.png", matrices{i}), "-dpng");
 
-        max_iter = max([noprecond_iter_n, icc0_iter_n, icc0r_iter_n, ict_iter_n, ictr_iter_n]);
+        max_iter = max([noprecond_iter, icc0_iter, icc0r_iter, ict_iter, ictr_iter]);
 
         adj_noprecond_resvec = zeros(max_iter, 1);
         for j = 1 : numel(noprecond_resvec)

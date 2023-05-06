@@ -56,10 +56,10 @@ function gmres_experiment()
         if test_params(i)
             [noprecond_x, noprecond_flag, noprecond_relres, noprecond_iter, noprecond_resvec, used_k, used_tol, used_maxit] = test_gmres_params(A, b, ks{i}, tols{i}, maxit);
         else
-            used_k = ks{i}(0);
-            used_tol = tols{i}(0);
-            used_maxit = maxit(0);
-            [noprecond_x, noprecond_flag, noprecond_relres, noprecond_iter, noprecond_resvec] = gmres(A, b, ks{i}(0), tols{i}(0), maxit(0));
+            used_k = ks{i}(1);
+            used_tol = tols{i}(1);
+            used_maxit = maxit(1);
+            [noprecond_x, noprecond_flag, noprecond_relres, noprecond_iter, noprecond_resvec] = gmres(A, b, ks{i}(1), tols{i}(1), maxit(1));
         end
         elapsed_time = etime(clock(), timer);
 
