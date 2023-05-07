@@ -172,32 +172,40 @@ function gmres_experiment()
         max_iter = max([noprecond_iter_n, ilu0_iter_n, ilu0r_iter_n, crout_iter_n, croutr_iter_n]);
 
         adj_noprecond_resvec = zeros(max_iter, 1);
-        for j = 1 : numel(noprecond_resvec)
+        for j = 1 : min(max_iter, numel(noprecond_resvec))
             adj_noprecond_resvec(j) = noprecond_resvec(j);
         end
 
         adj_ilu0_resvec = zeros(max_iter, 1);
-        for j = 1 : numel(ilu0_resvec)
+        for j = 1 : min(max_iter, numel(ilu0_resvec))
             adj_ilu0_resvec(j) = ilu0_resvec(j);
         end
 
         adj_ilu0r_resvec = zeros(max_iter, 1);
-        for j = 1 : numel(ilu0r_resvec)
+        for j = 1 : min(max_iter, numel(ilu0r_resvec))
             adj_ilu0r_resvec(j) = ilu0r_resvec(j);
         end
 
         adj_crout_resvec = zeros(max_iter, 1);
-        for j = 1 : numel(crout_resvec)
+        for j = 1 : min(max_iter, numel(crout_resvec))
             adj_crout_resvec(j) = crout_resvec(j);
         end
 
         adj_croutr_resvec = zeros(max_iter, 1);
-        for j = 1 : numel(croutr_resvec)
+        for j = 1 : min(max_iter, numel(croutr_resvec))
             adj_croutr_resvec(j) = croutr_resvec(j);
         end
 
         hf = figure();
-        plot(1 : max_iter, adj_noprecond_resvec, "k", 1 : max_iter, adj_ilu0_resvec, "r", 1 : max_iter, adj_ilu0r_resvec, "g", 1 : max_iter, adj_crout_resvec, "b", 1 : max_iter, adj_croutr_resvec, "y");
+        plot(1 : max_iter, log(adj_noprecond_resvec), "k");
+        hold on;
+        plot(1 : max_iter, log(adj_ilu0_resvec), "r");
+        hold on;
+        plot(1 : max_iter, log(adj_ilu0r_resvec), "g");
+        hold on;
+        plot(1 : max_iter, log(adj_crout_resvec), "b");
+        hold on;
+        plot(1 : max_iter, log(adj_croutr_resvec), "y");
         legend("No Prec.", "ILU(0)", "ILU(0) RCM", "Crout", "Crout RCM");
         print(hf, sprintf("out/%s_res_iter.png", matrices{i}), "-dpng");
 

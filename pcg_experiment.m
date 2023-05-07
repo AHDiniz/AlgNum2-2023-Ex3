@@ -157,15 +157,15 @@ function pcg_experiment()
         end
 
         hf = figure();
-        plot(1 : max_iter, adj_noprecond_resvec, "k");
+        plot(1 : max_iter, log(adj_noprecond_resvec), "k");
         hold on;
-        plot(1 : max_iter, adj_icc0_resvec, "r");
+        plot(1 : max_iter, log(adj_icc0_resvec), "r");
         hold on;
-        plot(1 : max_iter, adj_icc0r_resvec, "g");
+        plot(1 : max_iter, log(adj_icc0r_resvec), "g");
         hold on;
-        plot(1 : max_iter, adj_ict_resvec, "b");
+        plot(1 : max_iter, log(adj_ict_resvec), "b");
         hold on;
-        plot(1 : max_iter, adj_ictr_resvec, "y");
+        plot(1 : max_iter, log(adj_ictr_resvec), "y");
         legend("No Prec.", "ICC(0)", "ICC(0) RCM", "ICT", "ICT RCM");
         print(hf, sprintf("out/%s_res_iter.png", matrices{i}), "-dpng");
 
