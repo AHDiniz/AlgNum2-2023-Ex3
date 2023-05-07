@@ -132,32 +132,40 @@ function pcg_experiment()
         max_iter = max([noprecond_iter, icc0_iter, icc0r_iter, ict_iter, ictr_iter]);
 
         adj_noprecond_resvec = zeros(max_iter, 1);
-        for j = 1 : numel(noprecond_resvec)
+        for j = 1 : min(max_iter, numel(noprecond_resvec))
             adj_noprecond_resvec(j) = noprecond_resvec(j);
         end
 
         adj_icc0_resvec = zeros(max_iter, 1);
-        for j = 1 : numel(icc0_resvec)
+        for j = 1 : min(max_iter, numel(icc0_resvec))
             adj_icc0_resvec(j) = icc0_resvec(j);
         end
 
         adj_icc0r_resvec = zeros(max_iter, 1);
-        for j = 1 : numel(icc0r_resvec)
+        for j = 1 : min(max_iter, numel(icc0r_resvec))
             adj_icc0r_resvec(j) = icc0r_resvec(j);
         end
 
         adj_ict_resvec = zeros(max_iter, 1);
-        for j = 1 : numel(ict_resvec)
+        for j = 1 : min(max_iter, numel(ict_resvec))
             adj_ict_resvec(j) = ict_resvec(j);
         end
 
         adj_ictr_resvec = zeros(max_iter, 1);
-        for j = 1 : numel(ictr_resvec)
+        for j = 1 : min(max_iter, numel(ictr_resvec))
             adj_ictr_resvec(j) = ictr_resvec(j);
         end
 
         hf = figure();
-        plot(1 : max_iter, adj_noprecond_resvec, "k", 1 : max_iter, adj_icc0_resvec, "r", 1 : max_iter, adj_icc0r_resvec, "g", 1 : max_iter, adj_ict_resvec, "b", 1 : max_iter, adj_ictr_resvec, "y");
+        plot(1 : max_iter, adj_noprecond_resvec, "k");
+        hold on;
+        plot(1 : max_iter, adj_icc0_resvec, "r");
+        hold on;
+        plot(1 : max_iter, adj_icc0r_resvec, "g");
+        hold on;
+        plot(1 : max_iter, adj_ict_resvec, "b");
+        hold on;
+        plot(1 : max_iter, adj_ictr_resvec, "y");
         legend("No Prec.", "ICC(0)", "ICC(0) RCM", "ICT", "ICT RCM");
         print(hf, sprintf("out/%s_res_iter.png", matrices{i}), "-dpng");
 
