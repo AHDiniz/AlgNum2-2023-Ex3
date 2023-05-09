@@ -1,6 +1,7 @@
 function pcg_experiment()
     matrices = {"mesh3em5", "662_bus", "pdb1HYS", "Dubcova3"};
-    tols = [1e-10, 1e-10, 1e-7, 1e-10];
+    tols = [1e-7, 1e-7, 1e-4, 1e-7];
+    droptols = [1e-4, 1e-4, 1, 1e-4];
     maxit = [1e5];
 
     for i = 1 : numel(matrices)
@@ -93,7 +94,7 @@ function pcg_experiment()
 
         timer = clock();
         opts.type = "ict";
-        opts.droptol = 1e-4;
+        opts.droptol = droptols(i);
         L = ichol(A, opts);
         [ict_x, ict_flag, ict_relres, ict_iter, ict_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
         elapsed_time = etime(clock(), timer);
@@ -113,7 +114,7 @@ function pcg_experiment()
 
         timer = clock();
         opts.type = "ict";
-        opts.droptol = 1e-4;
+        opts.droptol = droptols(i);
         L = ichol(R, opts);
         [ictr_x, ictr_flag, ictr_relres, ictr_iter, ictr_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
         elapsed_time = etime(clock(), timer);
