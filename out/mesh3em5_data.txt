@@ -5,38 +5,38 @@ band: 281
 No Preconditioning
 
 Convergence Flag: 0
-Iterations: 19
+Iterations: 13
 Solution Inf. Norm: 1.000000e+00
-Elapsed time: 0.00743103s
+Elapsed time: 0.00278473s
 
 ICC(0) Preconditioning
 
 Convergence Flag: 0
-Iterations: 2
+Iterations: 1
 Solution Inf. Norm: 1.000000e+00
 nnz L: 833
-Elapsed time: 0.0067749s
+Elapsed time: 0.00167847s
 
 ICC(0) Preconditioning RCM
 
 Convergence Flag: 0
-Iterations: 43
-Solution Inf. Norm: 1.000000e+00
+Iterations: 30
+Solution Inf. Norm: 1.000001e+00
 nnz L: 833
-Elapsed time: 0.0462799s
+Elapsed time: 0.0145264s
 
 ICT Preconditioning
 
 Convergence Flag: 0
-Iterations: 2
+Iterations: 1
 Solution Inf. Norm: 1.000000e+00
 nnz L: 561
-Elapsed time: 0.00507355s
+Elapsed time: 0.00167847s
 
 ICT Preconditioning RCM
 
 Convergence Flag: 0
-Iterations: 43
-Solution Inf. Norm: 1.000000e+00
+Iterations: 30
+Solution Inf. Norm: 1.000001e+00
 nnz L: 561
-Elapsed time: 0.0258484s
+Elapsed time: 0.00762939s

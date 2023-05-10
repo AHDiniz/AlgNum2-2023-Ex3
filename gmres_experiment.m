@@ -11,7 +11,7 @@ function gmres_experiment()
         [1e-5, 1e-7, 1e-9, 1e-11],
         [1e-5, 1e-7, 1e-9, 1e-11]
     };
-    maxit = [1e5];
+    maxit = [1e2];
 
     for i = 1 : numel(matrices)
 
