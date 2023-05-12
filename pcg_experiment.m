@@ -1,8 +1,8 @@
 function pcg_experiment()
-    matrices = {"mesh3em5", "662_bus", "pdb1HYS", "Dubcova3"};
-    tols = [1e-7, 1e-7, 1e-4, 1e-7];
-    droptols = [1e-4, 1e-4, 1, 1e-4];
-    maxit = [1e5];
+    matrices = {"mesh3em5", "662_bus", "Dubcova3", "pdb1HYS"};
+    tols = [1e-7, 1e-7, 1e-7, 1e-4];
+    droptols = [1e-4, 1e-4, 1e-4, 1];
+    maxit = [1e5, 1e5, 1e5, 500];
 
     for i = 1 : numel(matrices)
 
@@ -42,7 +42,7 @@ function pcg_experiment()
         fprintf(data_file, "\nNo Preconditioning\n\n");
 
         timer = clock();
-        [noprecond_x, noprecond_flag, noprecond_relres, noprecond_iter, noprecond_resvec] = pcg(A, b, tols(i), maxit(1));
+        [noprecond_x, noprecond_flag, noprecond_relres, noprecond_iter, noprecond_resvec] = pcg(A, b, tols(i), maxit(i));
         elapsed_time = etime(clock(), timer);
 
         fprintf(data_file, "Convergence Flag: %d\n", noprecond_flag);
@@ -56,7 +56,7 @@ function pcg_experiment()
         timer = clock();
         opts.type = "nofill";
         L = ichol(A, opts);
-        [icc0_x, icc0_flag, icc0_relres, icc0_iter, icc0_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
+        [icc0_x, icc0_flag, icc0_relres, icc0_iter, icc0_resvec] = pcg(A, b, tols(i), maxit(i), L * L');
         elapsed_time = etime(clock(), timer);
 
         fprintf(data_file, "Convergence Flag: %d\n", icc0_flag);
@@ -75,7 +75,7 @@ function pcg_experiment()
         timer = clock();
         opts.type = "nofill";
         L = ichol(R, opts);
-        [icc0r_x, icc0r_flag, icc0r_relres, icc0r_iter, icc0r_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
+        [icc0r_x, icc0r_flag, icc0r_relres, icc0r_iter, icc0r_resvec] = pcg(A, b, tols(i), maxit(i), L * L');
         elapsed_time = etime(clock(), timer);
 
 
@@ -96,7 +96,7 @@ function pcg_experiment()
         opts.type = "ict";
         opts.droptol = droptols(i);
         L = ichol(A, opts);
-        [ict_x, ict_flag, ict_relres, ict_iter, ict_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
+        [ict_x, ict_flag, ict_relres, ict_iter, ict_resvec] = pcg(A, b, tols(i), maxit(i), L * L');
         elapsed_time = etime(clock(), timer);
 
         fprintf(data_file, "Convergence Flag: %d\n", ict_flag);
@@ -116,7 +116,7 @@ function pcg_experiment()
         opts.type = "ict";
         opts.droptol = droptols(i);
         L = ichol(R, opts);
-        [ictr_x, ictr_flag, ictr_relres, ictr_iter, ictr_resvec] = pcg(A, b, tols(i), maxit(1), L * L');
+        [ictr_x, ictr_flag, ictr_relres, ictr_iter, ictr_resvec] = pcg(A, b, tols(i), maxit(i), L * L');
         elapsed_time = etime(clock(), timer);
 
         fprintf(data_file, "Convergence Flag: %d\n", ictr_flag);
