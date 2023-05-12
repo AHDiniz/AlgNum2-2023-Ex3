@@ -38,6 +38,12 @@ function pcg_experiment()
         used_tol = .0;
         used_maxit = 0;
 
+        [noprecond_x, noprecond_flag, noprecond_relres, noprecond_iter, noprecond_resvec] = [zeros(n, 1), -1, .0, zeros(1, 2), zeros(n, 2)];
+        [icc0_x, icc0_flag, icc0_relres, icc0_iter, icc0_resvec] = [zeros(n, 1), -1, .0, zeros(1, 2), zeros(n, 2)];
+        [icc0r_x, icc0r_flag, icc0r_relres, icc0r_iter, icc0r_resvec] = [zeros(n, 1), -1, .0, zeros(1, 2), zeros(n, 2)];
+        [ict_x, ict_flag, ict_relres, ict_iter, ict_resvec] = [zeros(n, 1), -1, .0, zeros(1, 2), zeros(n, 2)];
+        [ictr_x, ictr_flag, ictr_relres, ictr_iter, ictr_resvec] = [zeros(n, 1), -1, .0, zeros(1, 2), zeros(n, 2)];
+
         # No preconditioning
         fprintf(data_file, "\nNo Preconditioning\n\n");
 
