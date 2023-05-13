@@ -4,7 +4,7 @@ function pcg_experiment()
     droptols = [1e-4, 1e-4, 1e-4, 1];
     maxit = [1e5, 1e5, 1e5, 500];
 
-    for i = 1 : numel(matrices)
+    for i = 4
 
         load(sprintf("in/%s.mat", matrices{i}));
 
