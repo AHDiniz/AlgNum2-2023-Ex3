@@ -38,7 +38,10 @@ function pcg_experiment()
         used_tol = .0;
         used_maxit = 0;
 
+        fclose(data_file);
+
         # No preconditioning
+        data_file = fopen(sprintf("out/%s_data.txt", matrices{i}), "a");
         fprintf(data_file, "\nNo Preconditioning\n\n");
 
         timer = clock();
@@ -49,8 +52,10 @@ function pcg_experiment()
         fprintf(data_file, "Iterations: %d\n", noprecond_iter);
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(noprecond_x, inf));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
+        fclose(data_file);
 
         # Only ILU(0) preconditioning
+        data_file = fopen(sprintf("out/%s_data.txt", matrices{i}), "a");
         fprintf(data_file, "\nICC(0) Preconditioning\n\n");
 
         timer = clock();
@@ -64,12 +69,14 @@ function pcg_experiment()
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(icc0_x, inf));
         fprintf(data_file, "nnz L: %d\n", nnz(L));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
+        fclose(data_file);
 
         hf = figure();
         spy(L);
         print(hf, sprintf("out/%s_spy_L_icc0.png", matrices{i}), "-dpng");
         
         # ILU(0) preconditioning with line reordering
+        data_file = fopen(sprintf("out/%s_data.txt", matrices{i}), "a");
         fprintf(data_file, "\nICC(0) Preconditioning RCM\n\n");
 
         timer = clock();
@@ -84,12 +91,14 @@ function pcg_experiment()
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(icc0r_x, inf));
         fprintf(data_file, "nnz L: %d\n", nnz(L));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
+        fclose(data_file);
 
         hf = figure();
         spy(L);
         print(hf, sprintf("out/%s_spy_L_icc0r.png", matrices{i}), "-dpng");
 
         # Only ILU crout preconditioning
+        data_file = fopen(sprintf("out/%s_data.txt", matrices{i}), "a");
         fprintf(data_file, "\nICT Preconditioning\n\n");
 
         timer = clock();
@@ -104,12 +113,14 @@ function pcg_experiment()
         fprintf(data_file, "Solution Inf. Norm: %e\n", norm(ict_x, inf));
         fprintf(data_file, "nnz L: %d\n", nnz(L));
         fprintf(data_file, "Elapsed time: %ds\n", elapsed_time);
+        fclose(data_file);
 
         hf = figure();
         spy(L);
         print(hf, sprintf("out/%s_spy_L_ict.png", matrices{i}), "-dpng");
 
         # ILU crout preconditioning with line reordering
+        data_file = fopen(sprintf("out/%s_data.txt", matrices{i}), "a");
         fprintf(data_file, "\nICT Preconditioning RCM\n\n");
 
         timer = clock();
