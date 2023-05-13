@@ -1,0 +1,26 @@
+n: 146689
+nnz: 3636643
+band: 146356
+
+No Preconditioning
+
+Convergence Flag: 0
+Iterations: 160
+Solution Inf. Norm: 1.000003e+00
+Elapsed time: 6.01794s
+
+ICC(0) Preconditioning
+
+Convergence Flag: 0
+Iterations: 79
+Solution Inf. Norm: 1.000045e+00
+nnz L: 1891666
+Elapsed time: 649.342s
+
+ICC(0) Preconditioning RCM
+
+Convergence Flag: 0
+Iterations: 675
+Solution Inf. Norm: 1.000020e+00
+nnz L: 1891666
+Elapsed time: 1025.35s
