@@ -7,7 +7,7 @@ No Preconditioning
 Convergence Flag: 0
 Iterations: 13
 Solution Inf. Norm: 1.000000e+00
-Elapsed time: 0.00262451s
+Elapsed time: 0.0927582s
 
 ICC(0) Preconditioning
 
@@ -15,7 +15,7 @@ Convergence Flag: 0
 Iterations: 1
 Solution Inf. Norm: 1.000000e+00
 nnz L: 833
-Elapsed time: 0.00170135s
+Elapsed time: 0.0812531s
 
 ICC(0) Preconditioning RCM
 
@@ -23,7 +23,7 @@ Convergence Flag: 0
 Iterations: 30
 Solution Inf. Norm: 1.000001e+00
 nnz L: 833
-Elapsed time: 0.0145264s
+Elapsed time: 0.0143967s
 
 ICT Preconditioning
 
@@ -31,7 +31,7 @@ Convergence Flag: 0
 Iterations: 1
 Solution Inf. Norm: 1.000000e+00
 nnz L: 561
-Elapsed time: 0.00154114s
+Elapsed time: 0.00164032s
 
 ICT Preconditioning RCM
 
@@ -39,4 +39,4 @@ Convergence Flag: 0
 Iterations: 30
 Solution Inf. Norm: 1.000001e+00
 nnz L: 561
-Elapsed time: 0.00758362s
+Elapsed time: 0.00798798s

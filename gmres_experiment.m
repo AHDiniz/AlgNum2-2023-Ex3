@@ -37,7 +37,7 @@ function gmres_experiment()
         identity = speye(n, n);
         P = identity(perm, :);
         R = P * A * P';
-        rb = P * b * P';
+        rb = P * b;
 
         hf = figure();
         spy(R);
@@ -46,11 +46,6 @@ function gmres_experiment()
         used_k = 0;
         used_tol = .0;
         used_maxit = 0;
-
-        [ilu0_x, ilu0_flag, ilu0_relres, ilu0_iter, ilu0_resvec] = [zeros(n, 1), -1, .0, zeros(1, 2), zeros(n, 2)];
-        [ilu0r_x, ilu0r_flag, ilu0r_relres, ilu0r_iter, ilu0r_resvec] = [zeros(n, 1), -1, .0, zeros(1, 2), zeros(n, 2)];
-        [crout_x, crout_flag, crout_relres, crout_iter, crout_resvec] = [zeros(n, 1), -1, .0, zeros(1, 2), zeros(n, 2)];
-        [croutr_x, croutr_flag, croutr_relres, croutr_iter, croutr_resvec] = [zeros(n, 1), -1, .0, zeros(1, 2), zeros(n, 2)];
 
         # No preconditioning
         fprintf(data_file, "\nNo Preconditioning\n\n");
